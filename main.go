@@ -21,7 +21,6 @@ func indexHandler(resp http.ResponseWriter, req *http.Request) {
 		"Films": {
 			{Title: "The Godfather", Director: "Francis Ford"},
 			{Title: "Blade Runner", Director: "Ridley Scott"},
-			{Title: "Harry Potter", Director: "Tyson Jackson"},
 		},
 	}
 	tmpl.Execute(resp, films)

@@ -30,7 +30,7 @@
               modules = [
                 {
                   # https://devenv.sh/reference/options/
-                  packages = [ ];
+                  packages = [ pkgs.gotools ];
 
                   processes.run.exec = "go run ./main.go";
 
