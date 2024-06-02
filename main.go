@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 type Film struct {
@@ -26,8 +27,18 @@ func indexHandler(resp http.ResponseWriter, req *http.Request) {
 	tmpl.Execute(resp, films)
 }
 
+func addFilms(resp http.ResponseWriter, req *http.Request) {
+    time.Sleep(2 * time.Second)
+    log.Print("htmx requerst received")
+    title := req.PostFormValue("title")
+    director := req.PostFormValue("director")
+
+    tmpl := template.Must(template.ParseFiles("index.html"))
+    tmpl.ExecuteTemplate(resp, "film-list-element", Film{Title: title, Director: director})
+}
+
 func main() {
-	fmt.Println("Hello World")
+    fmt.Println("Starting server at port 8000")
 	// var whoamiHandler http.HandlerFunc = func(resp http.ResponseWriter, req *http.Request) {
 	// 	io.WriteString(resp, req.Host)
 	// }
@@ -36,5 +47,6 @@ func main() {
 	}
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/whoami", whoamiHandler)
+	http.HandleFunc("/add-film", addFilms)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
